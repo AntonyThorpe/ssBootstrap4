@@ -1,0 +1,108 @@
+// Custom SASS settings
+@import "custom";
+@import "bootstrap";
+
+.current {
+    @extend .active;
+}
+
+// Search
+@include media-breakpoint-up(sm) {
+    .search-form {
+        margin-left: 10px;
+    }
+    
+    .search-form-input {
+        width: 60px;
+    }
+}
+
+
+// Layout for Footer
+// References: http://css-tricks.com/equidistant-objects-with-css/, http://stackoverflow.com/questions/6865194/fluid-width-with-equally-spaced-divs
+.footer-wrapper {
+    @include media-breakpoint-up(sm) {
+      text-align: justify;
+        -ms-text-justify: distribute-all-lines;
+        text-justify: distribute-all-lines;
+
+        // for spacing the footer and the edge
+        padding-right: 30px;
+        padding-left: 30px;  
+    }
+}
+
+.footer-column {
+    @include media-breakpoint-up(sm) {
+      display: inline-block;
+        vertical-align: top;
+        display: inline-block;
+        *display: inline;
+        zoom: 1;
+        //background-color: red;
+    }
+}
+
+@include media-breakpoint-up(sm) {
+    .stretch {
+        width: 100%;
+        display: inline-block;
+        font-size: 0.1; /* IE 9/10 do not like font-size: 0; */
+        line-height: 0
+    }
+}
+
+// re-position each menu item next to each other
+@include media-breakpoint-up(sm) {
+    .copywrite {
+        padding-left: 30px;
+    }
+}
+
+// Sticky Footer
+// Layout Variables
+$stickyFooterHeight: 155px;
+$gapBetweenNavAndMain: 0px;
+
+
+html {
+    // Sticky footer settigs
+    @include media-breakpoint-up(sm) {  /* Small devices (tablets, 768px and up) */
+        position: relative;
+        min-height: 100%;
+    }   
+}
+
+body {
+    // sticky footer settings
+    @include media-breakpoint-up(sm) {  /* Small devices (tablets, 768px and up) */
+        /* Margin bottom by footer height */
+        margin-bottom: $stickyFooterHeight !important;
+    }
+
+}
+
+
+.main {
+    margin-top: $gapBetweenNavAndMain;
+    padding-bottom: 20px;
+
+}
+
+.sidebar {  
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+}
+
+.footer {
+    background: $gray-lightest;
+    
+    // sticky footer settings
+    @include media-breakpoint-up(sm) {  /* Small devices (tablets, 768px and up) */
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: $stickyFooterHeight;        /* same as the body margin-bottom */
+        
+    }
+}
