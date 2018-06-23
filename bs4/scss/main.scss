@@ -2,6 +2,17 @@
 @import "custom";
 @import "bootstrap";
 
+// Localise for UK English
+$grey-900: $gray-900;
+$grey-800: $gray-800;
+$grey-700: $gray-700;
+$grey-600: $gray-600;
+$grey-500: $gray-500;
+$grey-400: $gray-400;
+$grey-300: $gray-300;
+$grey-200: $gray-200;
+$grey-100: $gray-100;
+
 .current {
     @extend .active;
 }
@@ -11,7 +22,7 @@
     .search-form {
         margin-left: 10px;
     }
-    
+
     .search-form-input {
         width: 60px;
     }
@@ -89,20 +100,20 @@ body {
 
 }
 
-.sidebar {  
+.sidebar {
     padding-bottom: 9px;
     margin: 40px 0 20px;
 }
 
 .footer {
-    background: $gray-lightest;
-    
+    background: $grey-100;
+
     // sticky footer settings
     @include media-breakpoint-up(sm) {  /* Small devices (tablets, 768px and up) */
         position: absolute;
         bottom: 0;
         width: 100%;
         height: $stickyFooterHeight;        /* same as the body margin-bottom */
-        
+
     }
 }

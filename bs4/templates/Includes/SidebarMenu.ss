@@ -6,11 +6,10 @@
 		        $MenuTitle
 		    </a>
 		    <% if $Children %>
-			    <ul class="nav nav-pills nav-stacked">
+			    <ul class="nav flex-column">
 			        <% include SidebarMenu %>
 			    </ul>
 		    <% end_if %>
 		</li>
 	<% end_loop %>
-
-<% end_if %> 
+<% end_if %>

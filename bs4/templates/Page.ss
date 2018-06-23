@@ -9,8 +9,8 @@
         <title><% if MetaTitle %>$MetaTitle<% else %>$Title<% end_if %> | $SiteConfig.Title<% if SiteConfig.Tagline %> - $SiteConfig.Tagline<% end_if %></title>
         $MetaTags(false)
         <% base_tag %>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
         <!--  Bookmarking favicons/icons for iOS/Android/Windows 8 tablets-->
         <meta name="mobile-web-app-capable" content="yes">
 
@@ -28,7 +28,7 @@
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
         <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
         <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-        
+
         <meta name="msapplication-TileColor" content="#fff"><!-- bg colour for a live tile in Windows 8 -->
 
         <meta name="msapplication-TileImage" content="/mstile-144x144.png">
@@ -39,9 +39,9 @@
     <body class="$ClassName<% if not $Menu(2) %> no-sidebar<% end_if %>" id="$URLSegment">
 
         <% include Header %>
-       
-        <main class="main" role="main">        
-            
+
+        <main class="main" role="main">
+
             <div class="container-fluid <% if $Menu(2) || ClassName = BlogHolder || ClassName = BlogEntry %><% end_if %>" >
                 <% include BreadCrumbs %>
                 $Layout
@@ -50,12 +50,10 @@
         <% include Footer %>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <%-- 
+        <%--
         <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
+            window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+            ga('create', 'UA-XXXXX-Y', 'auto'); ga('send', 'pageview')
         </script>
         --%>
 
