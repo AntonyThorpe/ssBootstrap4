@@ -36,7 +36,7 @@ A [Bootstrap 4](http://getbootstrap.com/) / [HTML5 Boilerplate](http://html5boil
         ]
     );
 ```
-4. At the command line cd to `/public/thirdparty/` and `bower install bootstrap tether popper.js --save`
+4. At the command line cd to `/public/thirdparty/` and `bower install bootstrap tether popper.js jquery --save`
 5. Run `/dev/build`.
 6. Optional
  * Favicon/icon: upload your icon through http://realfavicongenerator.net/ and copy the generated icons to your project root.
