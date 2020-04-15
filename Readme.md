@@ -32,6 +32,7 @@ A [Bootstrap 4](http://getbootstrap.com/) / [HTML5 Boilerplate](http://html5boil
             'thirdparty/bower_components/bootstrap/js/dist/popover.js', // requires tooltip
             'thirdparty/bower_components/bootstrap/js/dist/scrollspy.js',
             'thirdparty/bower_components/bootstrap/js/dist/tab.js',
+            'thirdparty/bower_components/bootstrap/js/dist/toast.js',
             'thirdparty/bower_components/bootstrap/js/dist/util.js'
         ]
     );
@@ -44,50 +45,76 @@ A [Bootstrap 4](http://getbootstrap.com/) / [HTML5 Boilerplate](http://html5boil
 ## Requirements
 Use software to convert Sass into CSS.  Gulp example below includes browser-sync for page reloading.
 ```js
-// npm install gulp gulp-sass browser-sync --save-dev
+// npm install gulp gulp-sass gulp-sourcemaps gulp-if gulp-autoprefixer browser-sync --save-dev
 
-var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    browserSync = require('browser-sync').create();
+const { gulp, watch, series, parallel, src, dest } = require('gulp');
+const sass = require('gulp-sass');
+const sourcemaps = require("gulp-sourcemaps");
+const gulpif = require('gulp-if');
+const autoprefixer = require('gulp-autoprefixer');
 
-    // Static Server + watching scss/html files
-    gulp.task('serve', ['sass'], function() {
+// Browser Sync (https://www.browsersync.io/docs/gulp)
+const browserSync = require('/usr/local/lib/node_modules/browser-sync').create();
 
-    	browserSync.init({
-    		proxy: 'http://bs4:8888/',
-    		files: [
-    			// Patterns for static files to watch.
-    			// We're watching js and php files within the app folder
-    			// and SilverStripe template files within themes
-    			"app/**/*.php",
-                "public/css/*.css",
-    			"themes/bs4/templates/**/*.ss"
-    		],
-            notify: false,
-    		browser: "google chrome",
-    		port: 3003,
-            open: "local",
-            online: false
-    	});
+/**
+ * Static Server + watching scss/html files
+ */
+function serve() {
 
-    	gulp.watch("./themes/bs4/scss/*.scss", ["sass"]);
-    	gulp.watch("./themes/bs4/templates/**/*.ss").on('change', browserSync.reload);
-    	gulp.watch("./app/**.*").on('change', browserSync.reload);
-        gulp.watch("./public/css/*.css").on('change', browserSync.reload);
-    });
+	// Serve files from the root of this project
+	// https://www.browsersync.io/docs/options
+	browserSync.init({
+		proxy: PROXY_URL,
+		files: [
+			// Patterns for static files to watch.
+			// We're watching js and php files within mysite
+			// and SilverStripe template files within themes
+            "app/**/*.*",
+            "public/css/*.css",
+            "public/javascript/*.js",
+			"themes/bs4/**/*.**"
+		],
+		notify: false,
+		browser: "google chrome",
+		port: 3003,
+        open: "local",
+        online: false
+	});
 
-    // Compile sass into CSS & auto-inject into browsers
-    gulp.task('sass', function() {
-    	return gulp.src([
-            "./themes/bs4/scss/main.scss",
-            "./themes/bs4/scss/editor.scss"
-        ])
-    		.pipe(sass().on('error', sass.logError))
-    		.pipe(gulp.dest("./public/css"))
-    		.pipe(browserSync.stream());
-    });
+    watch("./themes/bs4/scss/*.scss", sassTask);
+	watch("./themes/bs4/templates/**/*.ss").on('change', browserSync.reload);
+    watch("./app/src/**/*.php").on('change', browserSync.reload);
+	watch("./public/javascript/dist/*.js").on('change', browserSync.reload);
+};
 
-    gulp.task('default', ['serve']);
+/**
+ * [sassTask description]
+ * @return {function} [description]
+ */
+function sassTask() {
+	return src(["./themes/bs4/scss/main.scss"])
+		.pipe(gulpif(!isLive, sourcemaps.init()))
+		.pipe(sass().on('error', sass.logError))
+		.pipe(autoprefixer({
+            browsers: [
+                "IE >= 11",
+                "Edge >= 16",
+                "chrome >= 49",
+                "firefox >= 58",
+                "safari >= 11",
+                "ios_saf >= 10.3",
+                "samsung >= 4",
+                "and_chr >= 64",
+                "and_uc >= 11.8"
+            ]
+        }))
+		.pipe(gulpif(!isLive, sourcemaps.write()))
+		.pipe(dest("./public/css"))
+		.pipe(browserSync.stream());
+};
+
+exports.sass = series(sassTask);
+exports.serve = series(sassTask, serve);
 ```
 
 ## Structure of the theme's Sass files
@@ -103,6 +130,7 @@ var gulp = require('gulp'),
  ```
 
 ## Changelog
+* Upgraded Bootstrap to 4.4
 * SS 4.1 & Bootstrap 4.1.1
 * First release with bootstrap#v4.0.0-alpha.5
 
